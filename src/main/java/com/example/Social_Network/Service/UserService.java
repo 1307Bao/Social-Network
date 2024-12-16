@@ -128,6 +128,7 @@ public class UserService {
                 .userId(userId)
                 .bio(user.getBio())
                 .isFollow(isFollow)
+                .username(user.getUsername())
                 .fullname(user.getFullname())
                 .avt(user.getAvatar())
                 .numberOfFollower(numberOfFollower)
