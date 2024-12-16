@@ -62,7 +62,7 @@ public class UploadImageService {
             e.printStackTrace();
         }
 
-        String imgUrl = "https://drive.google.com/thumbnail?id=(Image ID)" + uploadFile.getId() + "&sz=w800" ;
+        String imgUrl = "https://drive.google.com/thumbnail?id=" + uploadFile.getId() + "&sz=w800" ;
         log.error("4 POST POSTED");
 
         // Xóa file tạm sau khi upload
