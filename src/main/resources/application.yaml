@@ -1,0 +1,33 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /social-network
+
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/social_network"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+jwt:
+  using-time: 24
+  signer-key: "aGm8QN6YqkOn8lXEy?9Q09Sf8tpOzkuJoiXhO4CLt?007eZ?=BSGNzVbA1eJM702"
+
+logging:
+  level:
+    root: INFO
+    com:
+      example: DEBUG
+    org:
+      springframework:
+        web:
+          socket: DEBUG
+        messaging: DEBUG
+      hibernate: DEBUG
+

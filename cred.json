@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "glowing-cooler-440713-e9",
+  "private_key_id": "bede92e17589fc8627f2a8a4d5a96c078889e5b8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDD6tnDpHSZsy0p\n3rSOcueX5LaECmusYAEkoC3gs1JrcOh+sQ+KqQVeHSzCtlY0LFa0kI7SgxC0k5MZ\nEPpv1919kgjUMCvRGvTIEYDBWQAf5aGpEjMzVR5NXzrwcKHin6IrXJ0nHYIMkDrN\nPeCobKHZYc9ZsBNKHv0F0+YmsebNCVv9QUklh1p6FROdryrR9ckP8jcwUwhgo38i\n9tDQ8DCv7Zj6ALCibtZzoa6xuVufbLxo3WhJho+aun93bJZlDcwHlWPIoApJ64G9\nkiECP1Mn2FQzuNiaqvm83VjjAPRExQqflswj1SKCQPpPhp/GrEtENCh1TIyc4xcc\n0jkZD3KNAgMBAAECggEAA3XS6csuSgapngsyai+qWnruJE/gzfcWHhT8KnNQWdhx\nKseqzBqnHx3py/iXdi1wTJkfBKXO9jmDCBbOLYqE/XJGWKUPKQ7OUvhIK2IMiAOw\nwsExCU+QDPLJIjUDDvMd1KE6n1W8lcc4WqakoKTmiOXa2S0scgsxEdjHwFg1CNsB\nBHQ0kbJ/OzEv1NWKDUAf/37Ku2EFtgLsGegU621btY08KxXeuc+5cIpU0HGe0Vop\nWOkHqpKM1K2KdwPX6uu0YuhzjzspkFVvMcHOItP8C5pkOTQQmFOM0vIaC5aXgHIJ\nntuXdu4aCg0ey5EXQU80doCe4MXV+7ADgJZggaDymwKBgQD1yjKYctRGaiHKgN5d\nKP1J0eWg4VOIMaD8lNbVf4fXw4NCktKJFfsjdDJcXmcTqG8FcFyLTJLqaLyCak/W\n21ZopXkBZBAUiExf1iCenLgKGuCz6E4BZL7qkGqTETTNjm8G9b/OMjcNeMu3BXiO\nv5hrL11vG/ZI/xRLdCEISPvyMwKBgQDMDktlMPiKWC3jtALsOjzkntsbMRWY8mF5\n22HRLxC8P0Em5FoZBal/aFF/DQFGwSRDndoyjoq5KRAz/6neAB+19sVAg5ZO/3Ag\n3dKgAN8Be+VrFUdHCMWnVkPjMU+dXBdo3sMgVJMkJyttYU14VZm7NhsXQfTk87tK\nebiUOc3IPwKBgQCeDJ0oRn6VoN2FuARE53yoIV6Fax8prrAUeykCNHWHmuMmxf63\nw/ivvaI8nz+s9lwdpTj9Igo+zYaaXf5k7LnNpMoAyPVGHrbt0WU8WQ5HAS2IwlKW\nts/FSYQeeav4miRu10u1LbkU4p4sXEo/kJhUJCryrYpbOhs0wcIT78qC3QKBgGj+\nXermRKwibRJBmFNmL9jOqByYp+03odIqgG0601iZD3PsgTNox2roCS7fSS3XyUoF\nWbUzxMs7BrxKq2OwGqDtJVdpnZhuNIqkuHBdomFIF6Z+n1s8dz7/0xR+VeG49c6e\n+DWVbtRmVyEDtPHa0awTTeMsq852XoMWmFOkXm7PAoGAMDcw/yDy07Kat63PrIP6\n6vPR0DP/KO/G9uZu2eAMODy7B1viLZEEsaa+Rnz6TlRm85OHUxig2blv+nQT/Pbb\nEhRRknSBtZLNHd6binFkMlHUxZMtsq0okXxWBTo2E/hwciw8a3v+h7ykQBDJRAlf\nsLAuT3F/RDrPLrXt36GThNc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "googledriveupload@glowing-cooler-440713-e9.iam.gserviceaccount.com",
+  "client_id": "109739060841543893783",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/googledriveupload%40glowing-cooler-440713-e9.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
