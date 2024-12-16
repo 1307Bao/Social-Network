@@ -17,7 +17,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
             "WHERE UF.USER_ID = :CURRENT_ID", nativeQuery = true)
     Page<Post> getAllPost(@Param("CURRENT_ID") String userId, Pageable pageable);
 
-    @Query(value = "SELECT * FROM POST P WHERE USER_ID = :user_id", nativeQuery = true)
+    @Query(value = "SELECT * FROM POST P WHERE USER_ID = :user_id ORDER BY create_at desc", nativeQuery = true)
     List<Post> getAllPostOfUser(@Param("user_id") String user_id);
 
     @Query(value = """
