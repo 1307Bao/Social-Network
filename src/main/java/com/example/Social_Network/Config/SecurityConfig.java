@@ -21,7 +21,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource())) // Cấu hình CORS
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/ws/**").permitAll()
