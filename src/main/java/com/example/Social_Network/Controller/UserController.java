@@ -39,7 +39,11 @@ public class UserController {
 
     @PatchMapping("/unfollow/{userId}")
     void unfollow(@PathVariable String userId) {
-        userService.unfollow(userId);
+        try {
+            userService.unfollow(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/{userId}")

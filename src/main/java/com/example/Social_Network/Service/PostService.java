@@ -167,15 +167,15 @@ public class PostService {
         simpMessagingTemplate.convertAndSendToUser(ownerPostId, "/queue/messages", payload);
     }
 
-    public List<PostOverviewResponse> getPosts(int offset, int limit) {
-        Pageable pageable = PageRequest.of(offset / limit, limit);
+    public List<PostOverviewResponse> getPosts(Date lastCreatedDate) {
         String userId = getUserId();
-        Page<Post> page = postRepository.getAllPost(userId, pageable);
+        List<Post> page = postRepository.getAllPost(userId, lastCreatedDate);
 
-        return page.getContent().stream()
-                .map(post -> PostOverviewResponse.builder()
+        return page.stream().map(
+                post -> PostOverviewResponse.builder()
                         .postId(post.getPost_id())
                         .postImg(post.getImage())
+                        .content(post.getContent())
                         .username(userRepository.getUsername(post.getUser_id()))
                         .postOwnerAvt(userRepository.getImage(post.getUser_id()))
                         .numberOfComment(postCommentRepository.getNumberOfComment(post.getPost_id()))

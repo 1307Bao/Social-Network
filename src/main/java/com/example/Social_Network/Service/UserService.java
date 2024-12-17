@@ -18,6 +18,7 @@ import com.example.Social_Network.Repository.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,7 @@ import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -76,6 +78,7 @@ public class UserService {
     }
 
     public void unfollow(String userId) {
+        log.error("UNFOLLOW");
         String currentUserId = currentId();
         UserFollowingId id = new UserFollowingId(currentUserId, userId);
 
@@ -101,7 +104,8 @@ public class UserService {
     }
 
     public List<UserSearchResponse> searchUser(String username) {
-        List<User> users = userRepository.findByUsername(username);
+        String currentId = currentId();
+        List<User> users = userRepository.findByUsername(username, currentId);
         return users.stream().map(
                 user -> UserSearchResponse.builder()
                         .userId(user.getUser_id())

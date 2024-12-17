@@ -10,10 +10,12 @@ import com.example.Social_Network.Service.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -49,9 +51,9 @@ public class PostController {
     }
 
     @GetMapping("/")
-    public ApiResponse<List<PostOverviewResponse>> getPosts(@RequestParam int offset,
-                                                            @RequestParam int limit) {
-        List<PostOverviewResponse> result = postService.getPosts(offset, limit);
+    public ApiResponse<List<PostOverviewResponse>> getPosts(@RequestParam(value = "lastCreatedDate", required = false)
+                                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date lastCreatedDate) {
+        List<PostOverviewResponse> result = postService.getPosts(lastCreatedDate);
         return ApiResponse.<List<PostOverviewResponse>>builder().result(result).build();
     }
 
