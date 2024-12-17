@@ -21,6 +21,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "SELECT avatar FROM user WHERE user_id = :user_id", nativeQuery = true)
     String getImage(@Param("user_id") String user_id);
 
-    @Query(value = "SELECT username FROM user WHERE username like :username% LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT username FROM user WHERE username like :username%" +
+            " AND username <> :username" +
+            " LIMIT 5", nativeQuery = true)
     List<User> findByUsername(@Param("username") String username);
 }
