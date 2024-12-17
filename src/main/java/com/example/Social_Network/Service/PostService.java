@@ -214,6 +214,7 @@ public class PostService {
         return PostResponse.builder()
                 .postImg(post.getImage())
                 .numberOfLike(numberOfLike)
+                .caption(post.getContent())
                 .username(userRepository.getUsername(post.getUser_id()))
                 .isFollow(isFollow)
                 .commentInPostResponseList(commentInPostResponses)
@@ -222,9 +223,9 @@ public class PostService {
                 .userAvt(userRepository.getImage(post.getUser_id())).build();
     }
 
-    public List<PostProfileResponse> getExplorePosts(int limit, int offset) {
+    public List<PostProfileResponse> getExplorePosts(long seed, int limit, int offset) {
         String userID = getUserId();
-        List<Post> explorePosts = postRepository.getExplorePosts(userID, limit, offset);
+        List<Post> explorePosts = postRepository.getExplorePosts(userID, seed, limit, offset);
 
         return explorePosts.stream().map(
                     explorePost -> PostProfileResponse.builder()

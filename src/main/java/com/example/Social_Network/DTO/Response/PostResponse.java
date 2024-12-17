@@ -15,6 +15,7 @@ public class PostResponse {
     String postImg;
     int numberOfLike;
     boolean isFollow;
+    String caption;
     String userId;
     String userAvt;
     String username;

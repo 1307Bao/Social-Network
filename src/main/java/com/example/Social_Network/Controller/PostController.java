@@ -62,8 +62,8 @@ public class PostController {
     }
 
     @GetMapping("/explore")
-    public ApiResponse<List<PostProfileResponse>> getExplorePosts(@RequestParam int limit, @RequestParam int offset) {
-        List<PostProfileResponse> result = postService.getExplorePosts(limit, offset);
+    public ApiResponse<List<PostProfileResponse>> getExplorePosts(@RequestParam long seed, @RequestParam int limit, @RequestParam int offset) {
+        List<PostProfileResponse> result = postService.getExplorePosts(seed, limit, offset);
         return ApiResponse.<List<PostProfileResponse>>builder().result(result).build();
     }
 }

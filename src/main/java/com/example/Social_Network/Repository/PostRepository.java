@@ -21,16 +21,17 @@ public interface PostRepository extends JpaRepository<Post, String> {
     List<Post> getAllPostOfUser(@Param("user_id") String user_id);
 
     @Query(value = """
-    SELECT * FROM post 
+    SELECT * FROM post\s
     WHERE user_id NOT IN (
-        SELECT following_id 
-        FROM user_following 
+        SELECT following_id\s
+        FROM user_following\s
         WHERE user_id = :currentUserId
     )
     ORDER BY RAND()
     LIMIT :limit OFFSET :offset
-    """, nativeQuery = true)
+   \s""", nativeQuery = true)
     List<Post> getExplorePosts(@Param("currentUserId") String currentUserId,
+                               @Param("seed") long seed,
                                @Param("limit") int limit,
                                @Param("offset") int offset);
 
