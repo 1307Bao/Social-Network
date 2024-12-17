@@ -1,10 +1,7 @@
 package com.example.Social_Network.Service;
 
 import com.example.Social_Network.DTO.Request.UpdateUserRequest;
-import com.example.Social_Network.DTO.Response.PostProfileResponse;
-import com.example.Social_Network.DTO.Response.ProfileResponse;
-import com.example.Social_Network.DTO.Response.UserResponse;
-import com.example.Social_Network.DTO.Response.UserSearchResponse;
+import com.example.Social_Network.DTO.Response.*;
 import com.example.Social_Network.Embeddable.UserFollowingId;
 import com.example.Social_Network.Entity.Notify;
 import com.example.Social_Network.Entity.User;
@@ -142,5 +139,31 @@ public class UserService {
                 .postProfileResponses(postProfileResponses)
                 .bio(user.getBio())
                 .build();
+    }
+
+    public List<FollowResponse> myFollowers() {
+        String userId = currentId();
+        List<User> userFollowers = userFollowingRepository.myFollowers(userId);
+        return userFollowers.stream().map(
+                user -> FollowResponse.builder()
+                        .avatar(user.getAvatar())
+                        .userId(user.getUser_id())
+                        .username(user.getUsername())
+                        .fullname(user.getFullname())
+                        .build()
+        ).toList();
+    }
+
+    public List<FollowResponse> myFollowing() {
+        String userId = currentId();
+        List<User> userFollowers = userFollowingRepository.myFollowing(userId);
+        return userFollowers.stream().map(
+                user -> FollowResponse.builder()
+                        .avatar(user.getAvatar())
+                        .userId(user.getUser_id())
+                        .username(user.getUsername())
+                        .fullname(user.getFullname())
+                        .build()
+        ).toList();
     }
 }

@@ -2,6 +2,7 @@ package com.example.Social_Network.Controller;
 
 import com.example.Social_Network.DTO.Request.ApiResponse;
 import com.example.Social_Network.DTO.Request.UpdateUserRequest;
+import com.example.Social_Network.DTO.Response.FollowResponse;
 import com.example.Social_Network.DTO.Response.ProfileResponse;
 import com.example.Social_Network.DTO.Response.UserResponse;
 import com.example.Social_Network.DTO.Response.UserSearchResponse;
@@ -62,5 +63,17 @@ public class UserController {
     ApiResponse<List<UserSearchResponse>> searchUser(@RequestParam String username) {
         List<UserSearchResponse> result = userService.searchUser(username);
         return ApiResponse.<List<UserSearchResponse>>builder().result(result).build();
+    }
+
+    @GetMapping("/my-followers")
+    ApiResponse<List<FollowResponse>> myFollowers() {
+        List<FollowResponse> result = userService.myFollowers();
+        return ApiResponse.<List<FollowResponse>>builder().result(result).build();
+    }
+
+    @GetMapping("/my-followers")
+    ApiResponse<List<FollowResponse>> myFollowing() {
+        List<FollowResponse> result = userService.myFollowing();
+        return ApiResponse.<List<FollowResponse>>builder().result(result).build();
     }
 }

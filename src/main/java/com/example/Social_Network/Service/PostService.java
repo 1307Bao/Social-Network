@@ -1,16 +1,14 @@
 package com.example.Social_Network.Service;
 
 import com.example.Social_Network.DTO.Request.CreatePostRequest;
-import com.example.Social_Network.DTO.Response.CommentInPostResponse;
-import com.example.Social_Network.DTO.Response.PostProfileResponse;
-import com.example.Social_Network.DTO.Response.PostOverviewResponse;
-import com.example.Social_Network.DTO.Response.PostResponse;
+import com.example.Social_Network.DTO.Response.*;
 import com.example.Social_Network.Embeddable.PostCommentId;
 import com.example.Social_Network.Embeddable.PostLikeId;
 import com.example.Social_Network.Embeddable.UserFollowingId;
 import com.example.Social_Network.Entity.*;
 import com.example.Social_Network.Exception.AppRuntimeException;
 import com.example.Social_Network.Exception.ErrorCode;
+import com.example.Social_Network.Mapper.UserMapper;
 import com.example.Social_Network.Message.MessagePayload;
 import com.example.Social_Network.Message.MessageType;
 import com.example.Social_Network.Repository.*;
@@ -18,9 +16,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,6 +39,7 @@ public class PostService {
     NotifyRepository notifyRepository;
     UploadImageService uploadImageService;
     SimpMessagingTemplate simpMessagingTemplate;
+    UserMapper userMapper;
 
     @PreAuthorize("hasRole('USER')")
     public void uploadPost(CreatePostRequest request) throws GeneralSecurityException, IOException {
@@ -235,5 +231,20 @@ public class PostService {
                             .numberOfLike(postLikeRepository.getNumberOfLike(explorePost.getPost_id()))
                             .build()
                 ).toList();
+    }
+
+    public List<UserLikePostResponse> getUsersLikePost(String postId){
+        String userId = getUserId();
+        List<User> usersLikePost = postRepository.getUsersLikePost(postId, userId);
+
+        return usersLikePost.stream().map(
+                user -> UserLikePostResponse.builder()
+                        .userId(user.getUser_id())
+                        .avatar(user.getAvatar())
+                        .fullname(user.getFullname())
+                        .username(user.getUsername())
+                        .isFollow(userFollowingRepository.existsById(new UserFollowingId(userId, user.getUser_id())))
+                        .build()
+        ).toList();
     }
 }

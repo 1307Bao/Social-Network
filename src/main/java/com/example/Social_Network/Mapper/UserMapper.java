@@ -1,6 +1,7 @@
 package com.example.Social_Network.Mapper;
 
 import com.example.Social_Network.DTO.Response.ProfileResponse;
+import com.example.Social_Network.DTO.Response.UserLikePostResponse;
 import com.example.Social_Network.Entity.User;
 import org.mapstruct.Mapper;
 

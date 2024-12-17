@@ -1,6 +1,7 @@
 package com.example.Social_Network.Repository;
 
 import com.example.Social_Network.Entity.Post;
+import com.example.Social_Network.Entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,7 +35,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
         FROM user_following\s
         WHERE user_id = :currentUserId
     )
-    ORDER BY RAND()
+    ORDER BY RAND(:seed)
     LIMIT :limit OFFSET :offset
    \s""", nativeQuery = true)
     List<Post> getExplorePosts(@Param("currentUserId") String currentUserId,
@@ -42,4 +43,11 @@ public interface PostRepository extends JpaRepository<Post, String> {
                                @Param("limit") int limit,
                                @Param("offset") int offset);
 
+    @Query(value = """
+            SELECT u.* FROM post p
+            JOIN post_like pl ON p.post_id = pl.post_id
+            JOIN user u on u.user_id = pl.user_id
+            where u.user_id <> :userId and p.post_id = :postId
+            """, nativeQuery = true)
+    List<User> getUsersLikePost(@Param("postId") String postId, @Param("userId") String userId);
 }

@@ -5,6 +5,7 @@ import com.example.Social_Network.DTO.Request.CreatePostRequest;
 import com.example.Social_Network.DTO.Response.PostOverviewResponse;
 import com.example.Social_Network.DTO.Response.PostProfileResponse;
 import com.example.Social_Network.DTO.Response.PostResponse;
+import com.example.Social_Network.DTO.Response.UserLikePostResponse;
 import com.example.Social_Network.Exception.AppRuntimeException;
 import com.example.Social_Network.Service.PostService;
 import lombok.AccessLevel;
@@ -67,5 +68,11 @@ public class PostController {
     public ApiResponse<List<PostProfileResponse>> getExplorePosts(@RequestParam long seed, @RequestParam int limit, @RequestParam int offset) {
         List<PostProfileResponse> result = postService.getExplorePosts(seed, limit, offset);
         return ApiResponse.<List<PostProfileResponse>>builder().result(result).build();
+    }
+
+    @GetMapping("/people-like-post/{postId}")
+    public ApiResponse<List<UserLikePostResponse>> getUserLikePost(@PathVariable String postId) {
+        List<UserLikePostResponse> result = postService.getUsersLikePost(postId);
+        return ApiResponse.<List<UserLikePostResponse>>builder().result(result).build();
     }
 }
