@@ -165,7 +165,7 @@ public class UserService {
 
     public List<FollowResponse> myFollowing() {
         String userId = currentId();
-        if (userFollowingRepository.numberOfFollower(userId) == 0) {
+        if (userFollowingRepository.numberOfFollowing(userId) == 0) {
             return new ArrayList<>();
         }
         List<Object[]> userFollowers = userFollowingRepository.myFollowing(userId);

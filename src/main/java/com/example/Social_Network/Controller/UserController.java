@@ -74,7 +74,12 @@ public class UserController {
 
     @GetMapping("/my-following")
     ApiResponse<List<FollowResponse>> myFollowing() {
-        List<FollowResponse> result = userService.myFollowing();
-        return ApiResponse.<List<FollowResponse>>builder().result(result).build();
+        try {
+            List<FollowResponse> result = userService.myFollowing();
+            return ApiResponse.<List<FollowResponse>>builder().result(result).build();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ApiResponse.<List<FollowResponse>>builder().result(null).build();
+        }
     }
 }

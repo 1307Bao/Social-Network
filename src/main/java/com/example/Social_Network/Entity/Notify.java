@@ -25,6 +25,7 @@ public class Notify {
     String senderId;
     String postId;
     Date createAt;
+    @Column(name = "is_read", nullable = true)
     boolean isRead;
     String type;
 }
