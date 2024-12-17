@@ -38,7 +38,7 @@ public class UserService {
     UserMapper userMapper;
     SimpMessagingTemplate simpMessagingTemplate;
     NotifyRepository notifyRepository;
-    UploadImageService uploadImageService;
+    HandleUploadImageService handleUploadImageService;
 
     private String currentId() {
         var context = SecurityContextHolder.getContext();
@@ -90,7 +90,7 @@ public class UserService {
         }
         User user = userRepository.findById(userId).orElseThrow(()-> new AppRuntimeException(ErrorCode.UNCATEGORIZED_EXCEPTION));
         if (request.getAvatar() != null) {
-            String avtUrl = uploadImageService.getUrlAfterUploaded(request.getAvatar());
+            String avtUrl = handleUploadImageService.uploadFile(request.getAvatar());
             user.setAvatar(avtUrl);
         }
         user.setBio(request.getBio());

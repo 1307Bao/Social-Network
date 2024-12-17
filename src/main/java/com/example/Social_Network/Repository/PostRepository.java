@@ -31,10 +31,10 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query(value = """
     SELECT * FROM post\s
     WHERE user_id NOT IN (
-        SELECT following_id\s
-        FROM user_following\s
+        SELECT uf.user_id\s
+        FROM user_following uf\s
         WHERE user_id = :currentUserId
-    )
+    ) AND user_id <> :currentUserId 
     ORDER BY RAND(:seed)
     LIMIT :limit OFFSET :offset
    \s""", nativeQuery = true)
