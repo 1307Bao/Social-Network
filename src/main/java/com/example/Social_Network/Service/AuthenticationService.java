@@ -78,7 +78,7 @@ public class AuthenticationService {
                 .fullname(request.getFullname())
                 .username(request.getUsername())
                 .password(password)
-                .avatar("https://drive.google.com/thumbnail?id=1YGuMdVwuEZUIMcM5WaoVOe0_hKAwwddc&sz=w800")
+                .avatar("http://res.cloudinary.com/dfh3lweic/image/upload/v1734451722/kqw2oxgubd8z6mynjlg3.png")
                 .bio("No bio yet.")
                 .build();
 
