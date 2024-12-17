@@ -24,6 +24,12 @@ jwt:
   using-time: 24
   signer-key: "aGm8QN6YqkOn8lXEy?9Q09Sf8tpOzkuJoiXhO4CLt?007eZ?=BSGNzVbA1eJM702"
 
+cloud:
+  name: "dfh3lweic"
+  api-key: "276797494958256"
+  api-secret: "fvLq2Lg_5YoGp0ZZhCaySmb-2hg"
+
+
 logging:
   level:
     root: INFO

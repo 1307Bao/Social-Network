@@ -37,9 +37,8 @@ public class PostService {
     UserRepository userRepository;
     UserFollowingRepository userFollowingRepository;
     NotifyRepository notifyRepository;
-    UploadImageService uploadImageService;
     SimpMessagingTemplate simpMessagingTemplate;
-    UserMapper userMapper;
+    HandleUploadImageService handleUploadImageService;
 
     @PreAuthorize("hasRole('USER')")
     public void uploadPost(CreatePostRequest request) throws GeneralSecurityException, IOException {
@@ -47,7 +46,7 @@ public class PostService {
         String userId = context.getAuthentication().getName();
         log.error("1 POST POSTED");
 
-        String imgUrl = uploadImageService.getUrlAfterUploaded(request.getFile());
+        String imgUrl = handleUploadImageService.uploadFile(request.getFile());
         log.error("POST POSTED");
         Post post = Post.builder().content(request.getContent())
                 .image(imgUrl)
@@ -55,23 +54,6 @@ public class PostService {
                 .user_id(userId).build();
 
         postRepository.save(post);
-    }
-
-    @PreAuthorize("hasRole('USER')")
-    public void deletePost(String postId) throws AppRuntimeException, GeneralSecurityException, IOException {
-        Post post = postRepository.findById(postId).orElseThrow(
-                ()-> new AppRuntimeException(ErrorCode.UNCATEGORIZED_EXCEPTION)
-        );
-        var context = SecurityContextHolder.getContext();
-        String userId = context.getAuthentication().getName();
-        String fileId = post.getImage();
-
-        if (post.getUser_id().equals(userId)) {
-            postRepository.deleteById(postId);
-            uploadImageService.deleteFile(fileId);
-        } else {
-            throw new AppRuntimeException(ErrorCode.UNCATEGORIZED_EXCEPTION);
-        }
     }
 
     private String getUserId() {

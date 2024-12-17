@@ -32,12 +32,6 @@ public class PostController {
         return ApiResponse.<Void>builder().build();
     }
 
-    @PatchMapping("/delete")
-    ApiResponse<Void> deletePost(@RequestParam String postId) throws AppRuntimeException, GeneralSecurityException, IOException {
-        postService.deletePost(postId);
-        return ApiResponse.<Void>builder().build();
-    }
-
     @PostMapping("/{postId}/like")
     public ApiResponse<Void> likePost(@PathVariable String postId) throws AppRuntimeException {
         postService.likePost(postId);
