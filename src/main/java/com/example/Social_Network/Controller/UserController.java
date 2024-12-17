@@ -67,6 +67,7 @@ public class UserController {
 
     @GetMapping("/my-followers")
     ApiResponse<List<FollowResponse>> myFollowers() {
+
         List<FollowResponse> result = userService.myFollowers();
         return ApiResponse.<List<FollowResponse>>builder().result(result).build();
     }

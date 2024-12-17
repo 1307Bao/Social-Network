@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -143,27 +144,43 @@ public class UserService {
 
     public List<FollowResponse> myFollowers() {
         String userId = currentId();
-        List<User> userFollowers = userFollowingRepository.myFollowers(userId);
-        return userFollowers.stream().map(
-                user -> FollowResponse.builder()
-                        .avatar(user.getAvatar())
-                        .userId(user.getUser_id())
-                        .username(user.getUsername())
-                        .fullname(user.getFullname())
-                        .build()
-        ).toList();
+        if (userFollowingRepository.numberOfFollower(userId) == 0) {
+            return new ArrayList<>();
+        }
+        List<Object[]> userFollowers = userFollowingRepository.myFollowers(userId);
+        List<FollowResponse> responses = new ArrayList<>();
+        for (Object[] object : userFollowers) {
+            FollowResponse response = FollowResponse.builder()
+                    .userId((String) object[0])
+                    .avatar((String) object[1])
+                    .username((String) object[2])
+                    .fullname((String) object[3])
+                    .build();
+
+            responses.add(response);
+        }
+
+        return responses;
     }
 
     public List<FollowResponse> myFollowing() {
         String userId = currentId();
-        List<User> userFollowers = userFollowingRepository.myFollowing(userId);
-        return userFollowers.stream().map(
-                user -> FollowResponse.builder()
-                        .avatar(user.getAvatar())
-                        .userId(user.getUser_id())
-                        .username(user.getUsername())
-                        .fullname(user.getFullname())
-                        .build()
-        ).toList();
+        if (userFollowingRepository.numberOfFollower(userId) == 0) {
+            return new ArrayList<>();
+        }
+        List<Object[]> userFollowers = userFollowingRepository.myFollowing(userId);
+        List<FollowResponse> responses = new ArrayList<>();
+        for (Object[] object : userFollowers) {
+            FollowResponse response = FollowResponse.builder()
+                    .userId((String) object[0])
+                    .avatar((String) object[1])
+                    .username((String) object[2])
+                    .fullname((String) object[3])
+                    .build();
+
+            responses.add(response);
+        }
+
+        return responses;
     }
 }

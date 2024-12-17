@@ -17,18 +17,18 @@ public interface UserFollowingRepository extends JpaRepository<UserFollowing, Us
     int numberOfFollower(@Param("user_id") String user_id);
 
     @Query(value = """
-            SELECT U.*
-            FROM USER_FOLLOWING UF 
-            JOIN USER U ON UF.USER_ID = U.USER_ID
-            WHERE UF.FOLLOWING_ID = :userId
+            SELECT u.user_id, u.avatar, u.username, u.fullname
+            FROM user_following UF 
+            JOIN user u ON UF.user_id = u.user_id 
+            WHERE UF.following_id = :userId
             """, nativeQuery = true)
-    List<User> myFollowers(@Param("userId") String userId);
+    List<Object[]> myFollowers(@Param("userId") String userId);
 
     @Query(value = """
-            SELECT U.*
-            FROM USER_FOLLOWING UF 
-            JOIN USER U ON UF.USER_ID = U.USER_ID
-            WHERE UF.USER_ID = :userId
+            SELECT u.user_id, u.avatar, u.username, u.fullname
+            FROM user_following UF 
+            JOIN user u ON UF.user_id = u.user_id 
+            WHERE UF.user_id = :userId
             """, nativeQuery = true)
-    List<User> myFollowing(@Param("userId") String userId);
+    List<Object[]> myFollowing(@Param("userId") String userId);
 }
