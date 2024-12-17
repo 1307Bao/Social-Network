@@ -3,6 +3,8 @@ package com.example.Social_Network.DTO.Response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,4 +21,5 @@ public class PostOverviewResponse {
     int numberOfLike;
     int numberOfComment;
     boolean isLike;
+    Date createAt;
 }

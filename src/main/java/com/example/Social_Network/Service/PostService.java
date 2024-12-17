@@ -159,6 +159,7 @@ public class PostService {
                         .numberOfComment(postCommentRepository.getNumberOfComment(post.getPost_id()))
                         .numberOfLike(postLikeRepository.getNumberOfLike(post.getPost_id()))
                         .postOwnerId(post.getUser_id())
+                        .createAt(post.getCreateAt())
                         .isLike(postLikeRepository.existsById(new PostLikeId(post.getPost_id(), userId)))
                         .build()).toList();
     }
