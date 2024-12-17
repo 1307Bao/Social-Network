@@ -78,6 +78,8 @@ public class AuthenticationService {
                 .fullname(request.getFullname())
                 .username(request.getUsername())
                 .password(password)
+                .avatar("https://drive.google.com/thumbnail?id=1YGuMdVwuEZUIMcM5WaoVOe0_hKAwwddc&sz=w800")
+                .bio("No bio yet.")
                 .build();
 
         userRepository.save(user);

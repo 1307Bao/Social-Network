@@ -84,13 +84,14 @@ public class UserService {
 
     public void updateUser(UpdateUserRequest request) throws AppRuntimeException, GeneralSecurityException, IOException {
         String userId = currentId();
-        if (userRepository.existsByUsername(request.getUsername())) {
+        if (userRepository.existsByUsername(request.getUsername()) && !userRepository.getUsername(userId).equals(request.getUsername())) {
             throw new AppRuntimeException(ErrorCode.USER_EXISTED);
         }
         User user = userRepository.findById(userId).orElseThrow(()-> new AppRuntimeException(ErrorCode.UNCATEGORIZED_EXCEPTION));
-
-        String avtUrl = uploadImageService.getUrlAfterUploaded(request.getAvatar());
-        user.setAvatar(avtUrl);
+        if (request.getAvatar() != null) {
+            String avtUrl = uploadImageService.getUrlAfterUploaded(request.getAvatar());
+            user.setAvatar(avtUrl);
+        }
         user.setBio(request.getBio());
         user.setGender(request.getGender());
         user.setFullname(user.getFullname());
@@ -135,6 +136,7 @@ public class UserService {
                 .numberOfFollowing(numberOfFollowing)
                 .numberOfPost(numberOfPost)
                 .postProfileResponses(postProfileResponses)
+                .bio(user.getBio())
                 .build();
     }
 }
