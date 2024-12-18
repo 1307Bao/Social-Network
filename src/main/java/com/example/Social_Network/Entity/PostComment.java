@@ -20,5 +20,4 @@ public class PostComment {
     @EmbeddedId
     PostCommentId postCommentId;
     String content;
-    Date createAt;
 }

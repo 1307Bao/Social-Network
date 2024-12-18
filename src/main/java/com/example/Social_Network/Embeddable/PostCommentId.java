@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Embeddable
 @Data
@@ -20,4 +21,6 @@ public class PostCommentId implements Serializable {
     String postId;
     @Column(name = "user_id")
     String userId;
+    @Column(name = "create_at")
+    Date createAt;
 }

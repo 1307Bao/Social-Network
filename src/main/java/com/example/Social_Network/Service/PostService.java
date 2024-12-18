@@ -117,9 +117,8 @@ public class PostService {
         String username = userRepository.getUsername(userId);
 
         PostComment postComment = PostComment.builder()
-                .postCommentId(new PostCommentId(postId, userId))
+                .postCommentId(new PostCommentId(postId, userId, new Date()))
                 .content(content)
-                .createAt(new Date())
                 .build();
 
         postCommentRepository.save(postComment);
