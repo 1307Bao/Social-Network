@@ -17,7 +17,8 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String message_id;
-    String conversation_id;
+    @Column(name = "conversation_id")
+    String conversationId;
     @Column(name = "sender_id")
     String senderId;
     @Column(name = "recipient_id")

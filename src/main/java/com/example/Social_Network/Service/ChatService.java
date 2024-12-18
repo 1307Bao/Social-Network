@@ -23,6 +23,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -60,7 +61,7 @@ public class ChatService {
 
         Message messageResponse = Message.builder()
                 .recipientId(recipientId)
-                .conversation_id(conversation.getConversation_id())
+                .conversationId(conversation.getConversation_id())
                 .senderId(senderId)
                 .text(content)
                 .createAt(new Date())
@@ -83,6 +84,7 @@ public class ChatService {
 
         return conversations.stream().map(
                 conversation -> ConversationResponse.builder()
+                        .userId(conversation.getSenderId())
                         .lastTimeMessage(calculateDateDifference(conversation.getLast_message_time(), new Date()))
                         .username(userRepository.getUsername(conversation.getRecipientId()))
                         .userAvt(userRepository.getImage(conversation.getRecipientId()))
@@ -94,10 +96,12 @@ public class ChatService {
     public List<ChatMessageResponse> getMessageWithUser(String recipientId, int offset, int limit) throws AppRuntimeException {
         Pageable pageable = PageRequest.of(offset, limit);
         String userId = getCurrentUserId();
-        Page<Message> messages = messageRepository.findAllBySenderIdAndRecipientId(userId, recipientId, pageable);
-
+        if (!conversationRepository.existsBySenderIdAndRecipientId(userId, recipientId)) {
+            return new ArrayList<>();
+        }
         Conversation conversation = conversationRepository.findBySenderIdAndRecipientId(userId, recipientId)
                 .orElseThrow(() -> new AppRuntimeException(ErrorCode.UNCATEGORIZED_EXCEPTION));
+        Page<Message> messages = messageRepository.findAllByConversationId(conversation.getConversation_id(), pageable);
 
         conversation.setRead(true);
         conversationRepository.save(conversation);

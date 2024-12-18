@@ -14,4 +14,6 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, String> {
     Page<Message> findAllBySenderIdAndRecipientId(String userId, String recipientId, Pageable pageable);
+
+    Page<Message> findAllByConversationId(String conversationId, Pageable pageable);
 }

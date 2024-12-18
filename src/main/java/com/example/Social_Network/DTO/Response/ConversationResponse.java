@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConversationResponse {
+    String userId;
     String username;
     String userAvt;
     String lastMessage;
