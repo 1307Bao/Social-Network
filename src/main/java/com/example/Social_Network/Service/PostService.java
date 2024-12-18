@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -218,16 +219,25 @@ public class PostService {
 
     public List<UserLikePostResponse> getUsersLikePost(String postId){
         String userId = getUserId();
-        List<User> usersLikePost = postRepository.getUsersLikePost(postId, userId);
+        log.error("user id: {}, post id: {}", userId, postId);
+        List<Object[]> usersLikePost = postRepository.getUsersLikePost(postId);
+        List<UserLikePostResponse> responses = new ArrayList<>();
 
-        return usersLikePost.stream().map(
-                user -> UserLikePostResponse.builder()
-                        .userId(user.getUser_id())
-                        .avatar(user.getAvatar())
-                        .fullname(user.getFullname())
-                        .username(user.getUsername())
-                        .isFollow(userFollowingRepository.existsById(new UserFollowingId(userId, user.getUser_id())))
-                        .build()
-        ).toList();
+        for (Object[] user : usersLikePost) {
+            UserLikePostResponse response = UserLikePostResponse.builder()
+                    .userId((String) user[0])
+                    .username((String) user[1])
+                    .fullname((String) user[2])
+                    .avatar((String) user[3])
+                    .isFollow(userFollowingRepository.existsById(UserFollowingId.builder()
+                            .userId((String) user[0])
+                            .followingId(userId)
+                            .build()))
+                    .build();
+
+            responses.add(response);
+        }
+
+        return responses;
     }
 }

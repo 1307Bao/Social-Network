@@ -69,6 +69,7 @@ public class PostController {
     @GetMapping("/people-like-post/{postId}")
     public ApiResponse<List<UserLikePostResponse>> getUserLikePost(@PathVariable String postId) {
         List<UserLikePostResponse> result = postService.getUsersLikePost(postId);
+
         return ApiResponse.<List<UserLikePostResponse>>builder().result(result).build();
     }
 }

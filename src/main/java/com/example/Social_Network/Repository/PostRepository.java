@@ -44,10 +44,9 @@ public interface PostRepository extends JpaRepository<Post, String> {
                                @Param("offset") int offset);
 
     @Query(value = """
-            SELECT u.* FROM post p
-            JOIN post_like pl ON p.post_id = pl.post_id
+            SELECT u.user_id, u.username, u.fullname, u.avatar FROM post_like pl 
             JOIN user u on u.user_id = pl.user_id
-            where u.user_id <> :userId and p.post_id = :postId
+            where pl.post_id = :postId
             """, nativeQuery = true)
-    List<User> getUsersLikePost(@Param("postId") String postId, @Param("userId") String userId);
+    List<Object[]> getUsersLikePost(@Param("postId") String postId);
 }
