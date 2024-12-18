@@ -147,20 +147,15 @@ public class UserService {
         if (userFollowingRepository.numberOfFollower(userId) == 0) {
             return new ArrayList<>();
         }
-        List<Object[]> userFollowers = userFollowingRepository.myFollowers(userId);
-        List<FollowResponse> responses = new ArrayList<>();
-        for (Object[] object : userFollowers) {
-            FollowResponse response = FollowResponse.builder()
-                    .userId((String) object[0])
-                    .avatar((String) object[1])
-                    .username((String) object[2])
-                    .fullname((String) object[3])
-                    .build();
-
-            responses.add(response);
-        }
-
-        return responses;
+        List<User> userFollowers = userRepository.myFollowers(userId);
+        return userFollowers.stream().map(
+                user -> FollowResponse.builder()
+                        .userId(user.getUser_id())
+                        .avatar(user.getAvatar())
+                        .fullname(user.getFullname())
+                        .username(user.getUsername())
+                        .build()
+        ).toList();
     }
 
     public List<FollowResponse> myFollowing() {
@@ -168,19 +163,14 @@ public class UserService {
         if (userFollowingRepository.numberOfFollowing(userId) == 0) {
             return new ArrayList<>();
         }
-        List<Object[]> userFollowers = userFollowingRepository.myFollowing(userId);
-        List<FollowResponse> responses = new ArrayList<>();
-        for (Object[] object : userFollowers) {
-            FollowResponse response = FollowResponse.builder()
-                    .userId((String) object[0])
-                    .avatar((String) object[1])
-                    .username((String) object[2])
-                    .fullname((String) object[3])
-                    .build();
-
-            responses.add(response);
-        }
-
-        return responses;
+        List<User> userFollowers = userRepository.myFollowing(userId);
+        return userFollowers.stream().map(
+                user -> FollowResponse.builder()
+                        .userId(user.getUser_id())
+                        .avatar(user.getAvatar())
+                        .fullname(user.getFullname())
+                        .username(user.getUsername())
+                        .build()
+        ).toList();
     }
 }
