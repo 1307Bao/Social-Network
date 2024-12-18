@@ -26,7 +26,6 @@ public class User {
     String fullname;
     @Column(name = "birthday")
     Date birthday;
-    @Column(name = "create_at")
     Date createAt;
     @Column(name = "avatar")
     String avatar;

@@ -54,7 +54,7 @@ public class ChatService {
         log.error("RECIPIENTID: " + senderId);
 
         conversation.setLast_message(content);
-        conversation.setLast_message_time(new Date());
+        conversation.setLast_message_time(String.valueOf(new Date()));
         conversation.setRecipientId(recipientId);
         conversation.setSenderId(senderId);
         conversationRepository.save(conversation);
@@ -85,7 +85,6 @@ public class ChatService {
         return conversations.stream().map(
                 conversation -> ConversationResponse.builder()
                         .userId(conversation.getSenderId())
-                        .lastTimeMessage(calculateDateDifference(conversation.getLast_message_time(), new Date()))
                         .username(userRepository.getUsername(conversation.getRecipientId()))
                         .userAvt(userRepository.getImage(conversation.getRecipientId()))
                         .lastMessage(conversation.getLast_message())

@@ -21,6 +21,5 @@ public class PostCommentId implements Serializable {
     String postId;
     @Column(name = "user_id")
     String userId;
-    @Column(name = "create_at")
     Date createAt;
 }

@@ -12,13 +12,17 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "Post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "post_id")
     String post_id;
+    @Column(name = "content")
     String content;
+    @Column(name = "user_id")
     String user_id;
-    @Column(name = "create_at")
     Date createAt;
+    @Column(name = "image")
     String image;
 }

@@ -23,6 +23,7 @@ public class Message {
     String senderId;
     @Column(name = "recipient_id")
     String recipientId;
+    @Column(name = "text")
     String text;
     Date createAt;
 }
