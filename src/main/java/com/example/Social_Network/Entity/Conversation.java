@@ -24,7 +24,7 @@ public class Conversation {
     @Column(name = "last_message")
     String last_message;
     @Column(name = "last_message_time")
-    String last_message_time;
+    Date last_message_time;
     @Column(name = "isRead")
     boolean isRead;
 }

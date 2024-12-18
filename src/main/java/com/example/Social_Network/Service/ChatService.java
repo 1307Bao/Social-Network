@@ -54,7 +54,7 @@ public class ChatService {
         log.error("RECIPIENTID: " + senderId);
 
         conversation.setLast_message(content);
-        conversation.setLast_message_time(String.valueOf(new Date()));
+        conversation.setLast_message_time(new Date());
         conversation.setRecipientId(recipientId);
         conversation.setSenderId(senderId);
         conversationRepository.save(conversation);
@@ -80,7 +80,7 @@ public class ChatService {
 
     public List<ConversationResponse> getAllConversation() {
         String userId = getCurrentUserId();
-        List<Conversation> conversations = conversationRepository.findBySenderId(userId);
+        List<Conversation> conversations = conversationRepository.findByRecipientId(userId);
 
         return conversations.stream().map(
                 conversation -> ConversationResponse.builder()
@@ -89,6 +89,7 @@ public class ChatService {
                         .userAvt(userRepository.getImage(conversation.getRecipientId()))
                         .lastMessage(conversation.getLast_message())
                         .isRead(false)
+                        .lastTimeMessage(calculateDateDifference(conversation.getLast_message_time(), new Date()))
                         .build()).toList();
     }
 

@@ -12,4 +12,6 @@ public interface ConversationRepository extends JpaRepository<Conversation, Stri
     List<Conversation> findBySenderId(String userId);
 
     boolean existsBySenderIdAndRecipientId(String userId, String recipientId);
+
+    List<Conversation> findByRecipientId(String userId);
 }
