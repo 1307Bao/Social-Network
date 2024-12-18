@@ -33,10 +33,12 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/like")
-    public ApiResponse<Void> likePost(@PathVariable String postId) throws AppRuntimeException {
-        postService.likePost(postId);
-
-        return ApiResponse.<Void>builder().build();
+    public void likePost(@PathVariable String postId) throws AppRuntimeException {
+        try {
+            postService.likePost(postId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @PostMapping("/{postId}/comment")

@@ -25,7 +25,7 @@ public interface UserFollowingRepository extends JpaRepository<UserFollowing, Us
     List<Object[]> myFollowers(@Param("userId") String userId);
 
     @Query(value = """
-            SELECT u.user_id, u.avatar, u.username, u.fullname
+            SELECT UF.following_id, u.avatar, u.username, u.fullname
             FROM user_following UF 
             JOIN user u ON UF.user_id = u.user_id 
             WHERE UF.user_id = :userId
