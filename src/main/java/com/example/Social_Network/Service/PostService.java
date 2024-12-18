@@ -8,7 +8,6 @@ import com.example.Social_Network.Embeddable.UserFollowingId;
 import com.example.Social_Network.Entity.*;
 import com.example.Social_Network.Exception.AppRuntimeException;
 import com.example.Social_Network.Exception.ErrorCode;
-import com.example.Social_Network.Mapper.UserMapper;
 import com.example.Social_Network.Message.MessagePayload;
 import com.example.Social_Network.Message.MessageType;
 import com.example.Social_Network.Repository.*;
@@ -85,17 +84,27 @@ public class PostService {
             postLikeRepository.save(postLike);
             String username = userRepository.getUsername(userId);
             String ownerPostId = post.getUser_id();
-            String message = "User " + username + " liked your post!";
 
-            Notify notify = Notify.builder().userId(ownerPostId)
-                    .senderId(userId)
-                    .content(message)
-                    .createAt(new Date())
-                    .type("like")
-                    .postId(postId)
-                    .isRead(false).build();
+            int numberOfLike = postLikeRepository.getNumberOfLike(postId);
+            String message = "";
+            if (numberOfLike > 0) {
+                message = "User " + username + " and " + numberOfLike +  " others like your post!";
+                Notify notify = notifyRepository.getNotificationsAboutLikePost(userId, postId);
+                notify.setContent(message);
+                notifyRepository.save(notify);
 
-            notifyRepository.save(notify);
+            } else {
+                message = "User " + username + " like your post!";
+                Notify notify = Notify.builder().userId(ownerPostId)
+                        .senderId(userId)
+                        .content(message)
+                        .createAt(new Date())
+                        .type("like")
+                        .postId(postId)
+                        .isRead(false).build();
+
+                notifyRepository.save(notify);
+            }
 
             MessagePayload payload =  MessagePayload.builder()
                     .message(message)
@@ -116,6 +125,28 @@ public class PostService {
         String ownerPostId = post.getUser_id();
         String username = userRepository.getUsername(userId);
 
+        int numberOfComment = postCommentRepository.getNumberOfComment(postId);
+        String message = "";
+
+        if (numberOfComment > 0) {
+            message = "User " + username + " and " + numberOfComment +  " others comment your post!";
+            Notify notify = notifyRepository.getNotificationsAboutCommentPost(userId, postId);
+            notify.setContent(message);
+            notifyRepository.save(notify);
+
+        } else {
+            message = "User " + username + " comment your post!";
+            Notify notify = Notify.builder().userId(ownerPostId)
+                    .senderId(userId)
+                    .content(message)
+                    .createAt(new Date())
+                    .type("comment")
+                    .postId(postId)
+                    .isRead(false).build();
+
+            notifyRepository.save(notify);
+        }
+
         PostComment postComment = PostComment.builder()
                 .postCommentId(new PostCommentId(postId, userId, new Date()))
                 .content(content)
@@ -123,24 +154,12 @@ public class PostService {
 
         postCommentRepository.save(postComment);
 
-        String message = username + "commented " + content;
         MessagePayload payload = MessagePayload.builder()
                 .message(message)
                 .postId(postId)
                 .type(MessageType.COMMENT)
                 .sender(userId)
                 .build();
-
-        Notify notify = Notify.builder().userId(ownerPostId)
-                .senderId(userId)
-                .content(message)
-                .createAt(new Date())
-                .type("comment")
-                .postId(postId)
-                .isRead(false).build();
-
-        notifyRepository.save(notify);
-
 
         simpMessagingTemplate.convertAndSendToUser(ownerPostId, "/queue/messages", payload);
     }

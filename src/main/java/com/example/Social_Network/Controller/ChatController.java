@@ -35,8 +35,8 @@ public class ChatController {
         return ApiResponse.<List<ConversationResponse>>builder().result(result).build();
     }
 
-    @GetMapping("/{recipientId}")
-    public ApiResponse<List<ChatMessageResponse>> getMessageWithUser(@PathVariable String recipientId
+    @GetMapping("")
+    public ApiResponse<List<ChatMessageResponse>> getMessageWithUser(@RequestParam String recipientId
             , @RequestParam int offset
             , @RequestParam int limit) throws AppRuntimeException {
         List<ChatMessageResponse> result = chatService.getMessageWithUser(recipientId, offset, limit);

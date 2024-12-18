@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,7 @@ public class ChatService {
         String senderId = getCurrentUserId();
 
         Conversation conversation = conversationRepository
-                .findBySenderIdAndRecipientId(senderId, recipientId)
-                .orElse(new Conversation());
+                .findBySenderIdAndRecipientId(senderId, recipientId);
         log.error("USERID: " + senderId);
         log.error("RECIPIENTID: " + senderId);
 
@@ -80,13 +80,13 @@ public class ChatService {
 
     public List<ConversationResponse> getAllConversation() {
         String userId = getCurrentUserId();
-        List<Conversation> conversations = conversationRepository.findByRecipientId(userId);
+        List<Conversation> conversations = conversationRepository.findByRecipientIdOrSenderId(userId);
 
         return conversations.stream().map(
                 conversation -> ConversationResponse.builder()
-                        .userId(conversation.getSenderId())
-                        .username(userRepository.getUsername(conversation.getRecipientId()))
-                        .userAvt(userRepository.getImage(conversation.getRecipientId()))
+                        .userId((conversation.getRecipientId().equals(userId)) ? conversation.getSenderId() : conversation.getRecipientId())
+                        .username(userRepository.getUsername((conversation.getRecipientId().equals(userId)) ? conversation.getSenderId() : conversation.getRecipientId()))
+                        .userAvt(userRepository.getImage((conversation.getRecipientId().equals(userId)) ? conversation.getSenderId() : conversation.getRecipientId()))
                         .lastMessage(conversation.getLast_message())
                         .isRead(false)
                         .lastTimeMessage(calculateDateDifference(conversation.getLast_message_time(), new Date()))
@@ -94,13 +94,13 @@ public class ChatService {
     }
 
     public List<ChatMessageResponse> getMessageWithUser(String recipientId, int offset, int limit) throws AppRuntimeException {
-        Pageable pageable = PageRequest.of(offset, limit);
+        Pageable pageable = PageRequest.of(offset, limit, Sort.by(Sort.Order.desc("createAt")));
         String userId = getCurrentUserId();
-        if (!conversationRepository.existsBySenderIdAndRecipientId(userId, recipientId)) {
+        if (conversationRepository.numberOfMessage(userId, recipientId) == 0) {
+            log.error("NOT THING");
             return new ArrayList<>();
         }
-        Conversation conversation = conversationRepository.findBySenderIdAndRecipientId(userId, recipientId)
-                .orElseThrow(() -> new AppRuntimeException(ErrorCode.UNCATEGORIZED_EXCEPTION));
+        Conversation conversation = conversationRepository.findBySenderIdAndRecipientId(userId, recipientId);
         Page<Message> messages = messageRepository.findAllByConversationId(conversation.getConversation_id(), pageable);
 
         conversation.setRead(true);

@@ -24,7 +24,7 @@ public class NotificationService {
 
     public List<NotifyResponse> getAllNotification(int limit, int offset) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        Pageable pageable = PageRequest.of(limit, offset);
+        Pageable pageable = PageRequest.of(offset, limit);
         Page<Notify> notifies = notifyRepository.findAllByUserId(pageable, userId);
 
         return notifies.getContent().stream().map(

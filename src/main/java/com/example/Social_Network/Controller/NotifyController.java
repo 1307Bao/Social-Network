@@ -22,7 +22,7 @@ import java.util.List;
 public class NotifyController {
     NotificationService notificationService;
 
-    @GetMapping("/")
+    @GetMapping("")
     ApiResponse<List<NotifyResponse>> getAllNotifications(@RequestParam int limit, @RequestParam int offset) {
         List<NotifyResponse> result = notificationService.getAllNotification(limit, offset);
 

@@ -40,7 +40,7 @@ public class SecurityConfig {
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost"); // Frontend origin
+        configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedMethod("*"); // Các HTTP method được phép
         configuration.addAllowedHeader("*"); // Các header được phép
         configuration.setAllowCredentials(true); // Cho phép cookie

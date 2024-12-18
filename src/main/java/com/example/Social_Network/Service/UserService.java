@@ -63,7 +63,7 @@ public class UserService {
         String message = username + " followed you";
 
         Notify notify = Notify.builder().content(message).userId(userId).senderId(currentUserId).createAt(new Date())
-                        .isRead(false).type("Follow").build();
+                        .isRead(false).type("follow").build();
 
         notifyRepository.save(notify);
         userFollowingRepository.save(userFollowing);
