@@ -25,7 +25,11 @@ public class ChatController {
 
     @PostMapping("/{recipientId}")
     public void sendMessage(@PathVariable String recipientId, @RequestBody String content) {
-        ChatMessageResponse messageResponse = chatService.sendMessage(recipientId, content);
+//        try {
+            ChatMessageResponse messageResponse = chatService.sendMessage(recipientId, content);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 

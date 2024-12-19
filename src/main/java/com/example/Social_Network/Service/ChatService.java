@@ -53,10 +53,21 @@ public class ChatService {
         log.error("USERID: " + senderId);
         log.error("RECIPIENTID: " + senderId);
 
-        conversation.setLast_message(content);
-        conversation.setLast_message_time(new Date());
-        conversation.setRecipientId(recipientId);
-        conversation.setSenderId(senderId);
+        if (conversation != null) {
+            conversation.setLast_message(content);
+            conversation.setLast_message_time(new Date());
+            conversation.setRecipientId(recipientId);
+            conversation.setSenderId(senderId);
+        } else {
+            conversation = Conversation.builder()
+                    .last_message(content)
+                    .last_message_time(new Date())
+                    .isRead(false)
+                    .senderId(senderId)
+                    .recipientId(recipientId)
+                    .build();
+        }
+
         conversationRepository.save(conversation);
 
         Message messageResponse = Message.builder()
